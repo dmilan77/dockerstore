@@ -16,16 +16,6 @@ RUN mkdir -p /opt &&\
   chown -R nifi:nifi $NIFI_HOME_DIR 
   
 
-# Setup SSH as it's a common requirement for downstream images
-RUN yum install -y openssh && \
-  ssh-keygen -f ~/.ssh/id_rsa -t rsa -q -N "" && \
-  cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys && \
-  ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key && \
-  ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key && \
-  ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key && \
-  ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key && \
-  cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys && \
-  rm -rf /tmp
 USER nifi
 WORKDIR $NIFI_HOME_DIR
 #ENTRYPOINT [" service nifi start"]
